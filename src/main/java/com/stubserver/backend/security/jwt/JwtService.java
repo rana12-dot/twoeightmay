@@ -41,7 +41,7 @@ public class JwtService {
                 .subject(username)
                 .issuedAt(new Date(now))
                 .expiration(new Date(exp))
-                .signWith(accessKey())
+                .signWith(accessKey)
                 .compact();
     }
 
@@ -57,7 +57,7 @@ public class JwtService {
                 .id(jti)
                 .issuedAt(new Date(now))
                 .expiration(new Date(exp))
-                .signWith(refreshKey())
+                .signWith(refreshKey)
                 .compact();
         return new RefreshTokenResult(token, jti);
     }
@@ -70,20 +70,20 @@ public class JwtService {
                 .subject(username)
                 .issuedAt(new Date(now))
                 .expiration(new Date(exp))
-                .signWith(resetKey())
+                .signWith(resetKey)
                 .compact();
     }
 
     public Claims verifyAccessToken(String token) {
-        return Jwts.parser().verifyWith(accessKey()).build().parseSignedClaims(token).getPayload();
+        return Jwts.parser().verifyWith(accessKey).build().parseSignedClaims(token).getPayload();
     }
 
     public Claims verifyRefreshToken(String token) {
-        return Jwts.parser().verifyWith(refreshKey()).build().parseSignedClaims(token).getPayload();
+        return Jwts.parser().verifyWith(refreshKey).build().parseSignedClaims(token).getPayload();
     }
 
     public Claims verifyResetToken(String token) {
-        return Jwts.parser().verifyWith(resetKey()).build().parseSignedClaims(token).getPayload();
+        return Jwts.parser().verifyWith(resetKey).build().parseSignedClaims(token).getPayload();
     }
 
     public Claims decodeWithoutVerify(String token) {
